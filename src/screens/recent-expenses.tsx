@@ -1,4 +1,4 @@
-import {Text} from 'react-native/types';
+import {Text} from 'react-native';
 
 export default function RecentExpenses() {
   return <Text>Recent Expenses</Text>;
