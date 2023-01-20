@@ -8,6 +8,7 @@ import ManageExpense from './src/screens/manage-expense';
 import RecentExpenses from './src/screens/recent-expenses';
 import AllExpenses from './src/screens/all-expenses';
 import {GlobalStyles} from './src/utils/color';
+import IconButton from './src/components/UI/icon-button';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -15,12 +16,24 @@ const BottomTab = createBottomTabNavigator();
 function ExpenseOverview() {
   return (
     <BottomTab.Navigator
-      screenOptions={{
+      screenOptions={({navigation}) => ({
         headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
         headerTintColor: 'white',
         tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
-      }}>
+        headerRight: ({tintColor}) => {
+          return (
+            <IconButton
+              icon="plus"
+              size={24}
+              color={tintColor}
+              onPress={() => {
+                navigation.navigate('ManageExpense');
+              }}
+            />
+          );
+        },
+      })}>
       <BottomTab.Screen
         name="RecentExpenses"
         component={RecentExpenses}
@@ -52,13 +65,21 @@ function App() {
     <>
       <StatusBar barStyle="default" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+            headerTintColor: 'white',
+          }}>
           <Stack.Screen
             name="ExpensesOverview"
             component={ExpenseOverview}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="ManageExpense" component={ManageExpense} />
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpense}
+            options={{presentation: 'modal'}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
