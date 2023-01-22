@@ -1,9 +1,10 @@
 import type {RouteProp} from '@react-navigation/native';
 import type {StackNavigationProp} from '@react-navigation/stack';
-import {useLayoutEffect} from 'react';
+import {useContext, useLayoutEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Button from '../components/UI/button';
 import IconButton from '../components/UI/icon-button';
+import {ExpensesContext} from '../store/expenses-context';
 import {GlobalStyles} from '../utils/color';
 
 type RootStackParamList = {
@@ -15,6 +16,9 @@ interface ManageExpenseProps {
 }
 
 export default function ManageExpense({route, navigation}: ManageExpenseProps) {
+  const {addExpense, deleteExpense, updateExpense} =
+    useContext(ExpensesContext);
+
   const editExpenseId = route.params?.expenseId;
 
   const isEditing = !!editExpenseId;
@@ -26,6 +30,7 @@ export default function ManageExpense({route, navigation}: ManageExpenseProps) {
   }, [navigation, isEditing]);
 
   function deleteFunctionHandler() {
+    deleteExpense(editExpenseId);
     navigation.goBack();
   }
 
@@ -34,6 +39,15 @@ export default function ManageExpense({route, navigation}: ManageExpenseProps) {
   }
 
   function confirmHandler() {
+    if (isEditing) {
+      updateExpense(editExpenseId, {
+        description: 'Test',
+        amount: 19,
+        date: new Date(),
+      });
+    } else {
+      addExpense({description: 'Test', amount: 19, date: new Date()});
+    }
     navigation.goBack();
   }
   return (

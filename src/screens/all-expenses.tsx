@@ -1,6 +1,14 @@
-import {Text} from 'react-native';
+import {useContext} from 'react';
 import ExpensesOutput from '../components/ExpensesOutput/expenses-output';
+import {ExpensesContext} from '../store/expenses-context';
 
 export default function AllExpenses() {
-  return <ExpensesOutput expensesPeriod="Total" />;
+  const expenseCtx = useContext(ExpensesContext);
+  return (
+    <ExpensesOutput
+      expensesPeriod="Total"
+      expenses={expenseCtx.expenses}
+      fallbackText="No expenses registered now"
+    />
+  );
 }

@@ -36,7 +36,7 @@ const DUMMY_EXPENSES = [
     id: 'e12',
     description: 'A pair of Shoes',
     amount: 59.99,
-    date: new Date('2021-12-19'),
+    date: new Date('2023-01-22'),
   },
   {
     id: 'e11',
@@ -85,20 +85,13 @@ interface TypeExpenseReducerAction {
   payload: any;
 }
 
-interface TypeExpenseReducerState {
-  state: any;
-}
-
 interface ExpensesContextProviderProps {
   children: ReactNode;
 }
 
 type expenseDataType = ExpenseItemProps;
 
-function expenseReducer(
-  state: TypeExpenseReducerState,
-  action: TypeExpenseReducerAction,
-) {
+function expenseReducer(state: any, action: TypeExpenseReducerAction) {
   switch (action.type) {
     case 'ADD':
       const id = new Date().toString() + Math.random().toString();
@@ -113,7 +106,9 @@ function expenseReducer(
       updatedExpenses[updatableExpenseIndex] = updatedItem;
       return updatedExpenses;
     case 'DELETE':
-      return state.filter(expense => expense.id !== action.payload);
+      return state.filter(
+        (expense: ExpenseItemProps) => expense.id !== action.payload,
+      );
     default:
       return state;
   }
