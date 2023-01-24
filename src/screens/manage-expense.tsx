@@ -2,6 +2,7 @@ import type {RouteProp} from '@react-navigation/native';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import {useContext, useLayoutEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
+import ExpenseForm from '../components/ManageExpense/expense-form';
 import Button from '../components/UI/button';
 import IconButton from '../components/UI/icon-button';
 import {ExpensesContext} from '../store/expenses-context';
@@ -52,6 +53,7 @@ export default function ManageExpense({route, navigation}: ManageExpenseProps) {
   }
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
