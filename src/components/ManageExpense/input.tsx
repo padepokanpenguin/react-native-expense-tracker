@@ -10,26 +10,30 @@ import {GlobalStyles} from '../../utils/color';
 
 interface InputProps {
   label: string;
-  // keyboardType: KeyboardTypeOptions | undefined;
-  // maxLength: number;
-  // onChange: () => void;
-  // placeholder?: string;
-  // multiline?: boolean;
+  invalid: boolean;
   style?: any;
   textInputConfig: TextInputProps;
 }
 
-export default function Input({label, textInputConfig, style}: InputProps) {
-  let inputStyle = [styles.input];
-
-  if (textInputConfig && textInputConfig.multiline) {
-    inputStyle.push(styles.inputMultiline);
-  }
-
+export default function Input({
+  label,
+  textInputConfig,
+  style,
+  invalid,
+}: InputProps) {
   return (
     <View style={[styles.inputContainer, style]}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput style={inputStyle} {...textInputConfig} />
+      <Text style={[styles.label, invalid && styles.invalidLabel]}>
+        {label}
+      </Text>
+      <TextInput
+        style={[
+          styles.input,
+          textInputConfig && textInputConfig.multiline && styles.inputMultiline,
+          invalid && styles.invalidInput,
+        ]}
+        {...textInputConfig}
+      />
     </View>
   );
 }
@@ -54,5 +58,11 @@ const styles = StyleSheet.create({
   inputMultiline: {
     minHeight: 100,
     textAlignVertical: 'top',
+  },
+  invalidLabel: {
+    color: GlobalStyles.colors.error500,
+  },
+  invalidInput: {
+    backgroundColor: GlobalStyles.colors.error50,
   },
 });
