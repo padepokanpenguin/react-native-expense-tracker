@@ -7,7 +7,7 @@ export interface ExpenseItemProps {
   description: string;
   date: Date;
   amount: number;
-  id?: string;
+  id: string;
 }
 
 export default function ExpenseItem({

@@ -1,7 +1,7 @@
 import {createContext, ReactNode, useReducer} from 'react';
 import {ExpenseItemProps} from '../components/ExpensesOutput/expense-item';
 
-const DUMMY_EXPENSES = [
+const DUMMY_EXPENSES: ExpenseItemProps[] = [
   {
     id: 'e1',
     description: 'A pair of Shoes',
@@ -65,12 +65,12 @@ const DUMMY_EXPENSES = [
 ];
 
 export const ExpensesContext = createContext({
-  expenses: [],
-  addExpense: ({description, amount, date}: ExpenseItemProps) => {},
+  expenses: [] as ExpenseItemProps[],
+  addExpense: ({description, amount, date}: Omit<ExpenseItemProps, 'id'>) => {},
   deleteExpense: (id: string) => {},
   updateExpense: (
     id: string,
-    {description, amount, date}: ExpenseItemProps,
+    {description, amount, date}: Partial<ExpenseItemProps>,
   ) => {},
 });
 
