@@ -20,13 +20,15 @@ interface ExpenseFormProps {
   defaultValue: ExpenseItemProps;
 }
 
+type InputState = Record<string, {value: string; isValid: boolean}>;
+
 export default function ExpenseForm({
   onCancel,
   onSubmit,
   submitButtonLabel,
   defaultValue,
 }: ExpenseFormProps) {
-  const [inputs, setInput] = useState<any>({
+  const [inputs, setInput] = useState<InputState>({
     amount: {
       value: defaultValue ? defaultValue.amount.toString() : '',
       isValid: true,
